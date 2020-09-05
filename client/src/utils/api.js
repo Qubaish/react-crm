@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5000';
+const apiUrl = 'https://react-node-crm.herokuapp.com';
 export const getUsers = () => {
     return fetch(`${apiUrl}/api/users`, {
       headers: {
