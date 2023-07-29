@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+const { Router } = require('express');
+const router = Router();
+
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const users = require('./routes/users');
@@ -36,6 +39,12 @@ passportConfig(passport);
 app.use("/api/users", users);
 app.use("/api/leads", passport.authenticate('jwt', {session: false}), leads);
 
+app.use('/users', router.get('/', async (req, res) => {
+  
+  const {name} = req.query;
+  res.status(200).send(name);
+}));
+
 if (['production'].includes(process.env.NODE_ENV)) {
   app.use(express.static('client/build'));
 
@@ -45,7 +54,7 @@ if (['production'].includes(process.env.NODE_ENV)) {
   });
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
   console.log(`Listening on port`, PORT);
 });

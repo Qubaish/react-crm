@@ -10,7 +10,7 @@ const User = require("../models/User");
 const { verifyAdmin } = require('../utils');
 
 
-router.post("/register", passport.authenticate('jwt', {session: false}), verifyAdmin, function(req, res) {
+router.post("/register", function(req, res) {
     const { errors, isValid } = validateRegisterInput(req.body);
     if (!isValid) {
       return res.status(200).json({...errors, err: true});
